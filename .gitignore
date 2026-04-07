@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+
+# OS
+.DS_Store
