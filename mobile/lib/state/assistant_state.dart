@@ -19,7 +19,6 @@ class AssistantState extends ChangeNotifier {
   List<String> suggestions = [];
   bool listening = false;
   bool offlineMode = false;
-  bool voiceAvailable = true;
   int? conversationId;
 
   Future<void> initialize() async {
@@ -29,7 +28,7 @@ class AssistantState extends ChangeNotifier {
     messages = historyRaw
         .map((item) => ChatMessage.fromJson(jsonDecode(item) as Map<String, dynamic>))
         .toList();
-    voiceAvailable = await _voiceController.init();
+    await _voiceController.init();
     notifyListeners();
   }
 
@@ -46,18 +45,10 @@ class AssistantState extends ChangeNotifier {
   }
 
   Future<void> startListening() async {
-    if (!voiceAvailable) return;
     listening = true;
     notifyListeners();
     await _voiceController.listen((text) async {
-      bool activated = text.toLowerCase().contains('jarvis');
-      if (!activated) {
-        try {
-          activated = await _apiClient.detectActivation(text);
-        } catch (_) {
-          activated = false;
-        }
-      }
+      final activated = text.toLowerCase().contains('jarvis') || await _apiClient.detectActivation(text);
       if (activated) {
         await send(text.replaceAll(RegExp('jarvis', caseSensitive: false), '').trim());
       }

@@ -21,12 +21,6 @@ class SettingsScreen extends StatelessWidget {
           title: Text('Integrações futuras'),
           subtitle: Text('Outlook, Alexa, Siri, Home Assistant e apps do celular já previstos no backend'),
         ),
-        if (!state.voiceAvailable)
-          const ListTile(
-            leading: Icon(Icons.warning_amber_rounded),
-            title: Text('Plugin de voz indisponível neste dispositivo'),
-            subtitle: Text('O app seguirá funcional via texto e modo offline.'),
-          ),
       ],
     );
   }

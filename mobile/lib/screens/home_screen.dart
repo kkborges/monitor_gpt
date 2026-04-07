@@ -60,8 +60,8 @@ class HomeScreen extends StatelessWidget {
               ),
               FloatingActionButton(
                 mini: true,
-                onPressed: !state.voiceAvailable ? null : (state.listening ? state.stopListening : state.startListening),
-                child: Icon(!state.voiceAvailable ? Icons.mic_none : (state.listening ? Icons.mic_off : Icons.mic)),
+                onPressed: state.listening ? state.stopListening : state.startListening,
+                child: Icon(state.listening ? Icons.mic_off : Icons.mic),
               ),
             ],
           ),
